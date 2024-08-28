@@ -58,12 +58,12 @@ class _XhomeState extends State<Xhome> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 30,
+                        radius: 40,
                         backgroundImage: NetworkImage(tweets[index].image),
                       ),
                       const SizedBox(width: 10),
