@@ -1,3 +1,5 @@
+import 'package:first_project/Doctor_app/Doc_app.dart';
+import 'package:first_project/Doctor_app/core/routing/app_router.dart';
 import 'package:first_project/twitter/constraints.dart';
 import 'package:first_project/twitter/x_home.dart';
 import 'package:first_project/twitter/xbottomnavbar.dart';
@@ -5,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'text.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(DocApp(
+    appRouter: AppRouter(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
