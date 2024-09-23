@@ -1,3 +1,4 @@
+import 'package:first_project/twitter/TweetsArticles.dart';
 import 'package:first_project/twitter/constraints.dart';
 import 'package:first_project/twitter/xbottomnavbar.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,21 @@ class Xhome extends StatefulWidget {
 }
 
 class _XhomeState extends State<Xhome> {
+  List<Tweetsarticles> tweetsmodel = [];
+  bool isloading = true;
+  @override
+  void initState() {
+    super.initState();
+    fetchNews(); // Call the separate async method
+  }
+
+  // Separate async method to fetch news
+  Future<void> fetchNews() async {
+    tweetsmodel = await TweetServices().getweets();
+    isloading = false;
+    setState(() {}); // Update the state to refresh the UI
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,25 +40,25 @@ class _XhomeState extends State<Xhome> {
             height: 30,
           ),
           centerTitle: true,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 5),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 5),
             child: CircleAvatar(
               radius: 30,
-              backgroundImage: const NetworkImage(
+              backgroundImage: NetworkImage(
                 'https://www.pngarts.com/files/3/Avatar-Transparent-Image.png',
               ),
             ),
           ),
-          bottom: TabBar(
+          bottom: const TabBar(
             unselectedLabelColor:
                 contentColor, // Make sure these are defined in constraints.dart
             indicatorColor: primaryColor,
-            labelStyle: const TextStyle(
+            labelStyle: TextStyle(
               fontSize: 16,
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
-            tabs: const [
+            tabs: [
               Tab(text: "For you"),
               Tab(text: 'Following'),
               Tab(text: 'Subscribed'),
@@ -81,10 +97,10 @@ class _XhomeState extends State<Xhome> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 7),
-                                Icon(Icons.verified,
+                                const SizedBox(width: 7),
+                                const Icon(Icons.verified,
                                     color: Colors.blue, size: 15),
-                                SizedBox(width: 7),
+                                const SizedBox(width: 7),
                                 Text(
                                   "${tweets[index].username} - ${tweets[index].time}",
                                   style: const TextStyle(
@@ -99,43 +115,64 @@ class _XhomeState extends State<Xhome> {
                               style: const TextStyle(fontSize: 14),
                             ),
                             tweets[index].image != ''
-                                ? Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                        image:
-                                            NetworkImage(tweets[index].image),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ))
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return Scaffold(
+                                          body: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  child: Image.network(
+                                                    tweetsmodel[index].image,
+                                                  )),
+                                            ),
+                                          ),
+                                        );
+                                      }));
+                                    },
+                                    child: Container(
+                                        height: 300,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                tweetsmodel[index].image),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )),
+                                  )
                                 : Container(),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
-                                Icon(Icons.reply_outlined,
+                                const Icon(Icons.reply_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].shares.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.comment_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.comment_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].comments.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.favorite_border,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.favorite_border,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].likes.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.analytics_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.analytics_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].views.toString(),
-                                    style: TextStyle(color: Colors.grey)),
+                                    style: const TextStyle(color: Colors.grey)),
                               ],
                             )
                           ],
@@ -147,10 +184,10 @@ class _XhomeState extends State<Xhome> {
                             children: [
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.more_horiz)),
+                                  icon: const Icon(Icons.more_horiz)),
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.file_upload_outlined)),
+                                  icon: const Icon(Icons.file_upload_outlined)),
                             ],
                           ))
                     ],
@@ -189,10 +226,10 @@ class _XhomeState extends State<Xhome> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 7),
-                                Icon(Icons.verified,
+                                const SizedBox(width: 7),
+                                const Icon(Icons.verified,
                                     color: Colors.blue, size: 15),
-                                SizedBox(width: 7),
+                                const SizedBox(width: 7),
                                 Text(
                                   "${tweets[index].username} - ${tweets[index].time}",
                                   style: const TextStyle(
@@ -218,32 +255,32 @@ class _XhomeState extends State<Xhome> {
                                       ),
                                     ))
                                 : Container(),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
-                                Icon(Icons.reply_outlined,
+                                const Icon(Icons.reply_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].shares.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.comment_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.comment_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].comments.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.favorite_border,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.favorite_border,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].likes.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.analytics_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.analytics_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].views.toString(),
-                                    style: TextStyle(color: Colors.grey)),
+                                    style: const TextStyle(color: Colors.grey)),
                               ],
                             )
                           ],
@@ -255,10 +292,10 @@ class _XhomeState extends State<Xhome> {
                             children: [
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.more_horiz)),
+                                  icon: const Icon(Icons.more_horiz)),
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.file_upload_outlined)),
+                                  icon: const Icon(Icons.file_upload_outlined)),
                             ],
                           ))
                     ],
@@ -296,10 +333,10 @@ class _XhomeState extends State<Xhome> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 7),
-                                Icon(Icons.verified,
+                                const SizedBox(width: 7),
+                                const Icon(Icons.verified,
                                     color: Colors.blue, size: 15),
-                                SizedBox(width: 7),
+                                const SizedBox(width: 7),
                                 Text(
                                   "${tweets[index].username} - ${tweets[index].time}",
                                   style: const TextStyle(
@@ -325,32 +362,32 @@ class _XhomeState extends State<Xhome> {
                                       ),
                                     ))
                                 : Container(),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
-                                Icon(Icons.reply_outlined,
+                                const Icon(Icons.reply_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].shares.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.comment_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.comment_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].comments.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.favorite_border,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.favorite_border,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].likes.toString(),
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(width: 10),
-                                Icon(Icons.analytics_outlined,
+                                    style: const TextStyle(color: Colors.grey)),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.analytics_outlined,
                                     color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(tweets[index].views.toString(),
-                                    style: TextStyle(color: Colors.grey)),
+                                    style: const TextStyle(color: Colors.grey)),
                               ],
                             )
                           ],
@@ -362,10 +399,10 @@ class _XhomeState extends State<Xhome> {
                             children: [
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.more_horiz)),
+                                  icon: const Icon(Icons.more_horiz)),
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.file_upload_outlined)),
+                                  icon: const Icon(Icons.file_upload_outlined)),
                             ],
                           ))
                     ],

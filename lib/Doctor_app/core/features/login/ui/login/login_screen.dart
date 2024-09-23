@@ -11,12 +11,12 @@ class LoginScreen extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              Text('Login Screen'),
+              const Text('Login Screen'),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/onBoardingScreen');
                 },
-                child: Text('Go to Onboarding'),
+                child: const Text('Go to Onboarding'),
               ),
             ],
           ),

@@ -12,7 +12,7 @@ class OnboardingScreen extends StatelessWidget {
             child: SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(top: 30.h, bottom: 30.h),
-        child: Column(
+        child: const Column(
           children: [
             DocLogoName(),
           ],

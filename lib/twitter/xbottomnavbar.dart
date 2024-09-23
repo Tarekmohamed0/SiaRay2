@@ -15,7 +15,7 @@ class _XBottomNavBarState extends State<XBottomNavBar> {
   @override
   void initState() {
     page = [
-      Xhome(),
+      const Xhome(),
       navBarPage(Icons.search),
       navBarPage(Icons.notifications),
       navBarPage(Icons.grid_view),
@@ -29,13 +29,13 @@ class _XBottomNavBarState extends State<XBottomNavBar> {
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Color(0xff00000),
+            backgroundColor: const Color(0x0ff00000),
             showSelectedLabels: false,
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             currentIndex: selectedIndex,
             onTap: (index) => setState(() => selectedIndex = index),
-            items: [
+            items: const [
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.home,

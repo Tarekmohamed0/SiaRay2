@@ -9,7 +9,7 @@ class CustomTextStyle {
     color: Colors.black,
   );
 
-  static TextStyle font32BlueBold = TextStyle(
+  static TextStyle font32BlueBold = const TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
     color: ColorsManager.mainBlue,
